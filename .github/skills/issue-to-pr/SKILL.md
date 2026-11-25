@@ -16,19 +16,28 @@ same `gh` commands you ran by hand in Section 1.
    the explicitly verified fork remote, never implicitly to origin.
    - If no fork destination is ready, stop before edits or resource creation.
      Offer to prepare it in this same checkout with approval, preserving origin,
-     other remotes, and local work. Do not open or switch sessions.
+     other remotes, and local work. Do not open or switch sessions; keep the
+     current checkout and branch context.
 2. Pick the issue. Use the number you were given, or list open issues and ask:
    `gh issue list --state open`
 3. Read the issue and the code it mentions: `gh issue view <n>`
 4. Create a branch: `git switch -c fix/issue-<n>`
 5. Make the smallest change that fixes the issue, and run the project's tests
    if it has any.
-6. Show the changes and obtain approval before committing, pushing explicitly to
-   the verified fork remote, and opening
+6. When the fix needs library or API documentation, use the public Microsoft
+   Learn MCP server at `https://learn.microsoft.com/api/mcp`. Send only public
+   documentation queries, not repository contents, and cite relevant sources in
+   the draft PR. If the connector is unavailable, report it instead of claiming
+   the lookup succeeded.
+7. Run the built-in `/security-review` skill on the changes. Fix any HIGH or
+   CRITICAL findings and list other findings in the draft PR body.
+8. Show the changes and obtain approval before committing, pushing only to the
+   explicitly verified fork remote (never implicitly to origin), and opening
    a draft pull request that closes the issue. Preserve any learner skill edits
-   and include them only with approval:
-   `gh pr create --draft --title "Fix #<n>: <issue title>" --body "Closes #<n>"`
-7. Ask before commenting on the issue with what changed and how to test it.
+   and include them only with approval. Start the PR body with "Closes #<n>",
+   then add a short summary and a "How to test" section with exact commands:
+   `gh pr create --draft --title "Fix #<n>: <issue title>" --body "<body>"`
+9. Ask before commenting on the issue with what changed and how to test it.
    Report the exact issue, PR, and branch. Leave this PR branch checked out so
    the learner can review it in the same session; do not switch branches.
 
